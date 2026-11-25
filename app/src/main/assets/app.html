@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ABDO TOOLKIT</title>
+<style>
+body{background:#000;color:#00ff41;font-family:monospace;text-align:center;padding:15px}
+.box{background:#111;border:1px solid #00ff41;padding:15px;border-radius:12px;margin:10px}
+input,button{width:90%;padding:12px;margin:8px;background:#000;color:#00ff41;border:1px solid #00ff41;border-radius:10px;font-size:16px}
+button{background:#00ff41;color:#000;font-weight:bold}
+.hidden{display:none}
+.card{background:#000;border:1px solid #00ff41;padding:12px;margin:8px;border-radius:10px;text-align:left}
+</style></head><body>
+<h1>💻 ABDO TOOLKIT</h1><p>Offline Edition - No Internet Needed</p>
+
+<div id="login" class="box">
+<h2>🔒 ENTER PASSWORD</h2>
+<input id="pin" type="password" placeholder="Enter Password">
+<button onclick="unlock()">UNLOCK</button>
+<p id="err"></p>
+</div>
+
+<div id="main" class="hidden">
+<h2>✅ Welcome Abdo</h2>
+
+<div class="card"><b>1. Password Generator</b><br><button onclick="genPass()">Generate</button><p id="passOut"></p></div>
+
+<div class="card"><b>2. Text Encoder</b><br><input id="txt" placeholder="اكتب نص"><button onclick="encodeTxt()">Encode</button><p id="encOut"></p></div>
+
+<div class="card"><b>3. System Info</b><br><button onclick="sysInfo()">Show Info</button><p id="sysOut"></p></div>
+
+<div class="card"><b>4. Notes</b><br><input id="note" placeholder="اكتب ملاحظة"><button onclick="saveNote()">Save</button><p id="noteOut"></p></div>
+
+<div class="card"><b>5. Calculator - IP</b><br><input id="ip1" placeholder="مثال: 192.168.1.1"><button onclick="checkIp()">Check</button><p id="ipOut"></p></div>
+
+<p>نسخة أوفلاين - بتشتغل من غير نت</p>
+</div>
+
+<script>
+function unlock(){
+  if(document.getElementById('pin').value=='201179'){
+    document.getElementById('login').style.display='none';
+    document.getElementById('main').classList.remove('hidden');
+  } else { document.getElementById('err').innerText='❌ غلط'; }
+}
+function genPass(){
+  let c="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$";
+  let p=""; for(let i=0;i<16;i++){p+=c[Math.floor(Math.random()*c.length)]}
+  document.getElementById('passOut').innerText=p;
+}
+function encodeTxt(){
+  let t=document.getElementById('txt').value;
+  document.getElementById('encOut').innerText=btoa(unescape(encodeURIComponent(t)));
+}
+function sysInfo(){
+  document.getElementById('sysOut').innerText="Device: "+navigator.userAgent+" | Online: "+navigator.onLine+" | Screen: "+screen.width+"x"+screen.height;
+}
+function saveNote(){
+  localStorage.setItem('abdo_note', document.getElementById('note').value);
+  document.getElementById('noteOut').innerText="تم الحفظ ✅";
+}
+function checkIp(){
+  let ip=document.getElementById('ip1').value;
+  if(ip.startsWith('192.168.')||ip.startsWith('10.')) document.getElementById('ipOut').innerText="Private IP - شبكة داخلية";
+  else document.getElementById('ipOut').innerText="Public IP - شبكة عامة";
+}
+</script>
+</body></html>
